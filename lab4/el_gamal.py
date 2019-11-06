@@ -16,7 +16,7 @@ def get_prime_number_p():
 
   line = ""
   with open(RANDOM_NUMBERS_FILE, 'r') as f:
-    for i in range(rand):
+    for _ in range(rand):
       line = f.readline()
 
   return int(line)
