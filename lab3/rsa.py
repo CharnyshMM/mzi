@@ -1,6 +1,8 @@
 import random
 import sys
 
+
+R_LO, R_UP = 500, 2000
 RANDOM_NUMBERS_FILE = 'primes.txt'
 PRIVATE_KEYS_FILE = "private_keys.txt"
 PUBLIC_KEYS_FILE = "public_keys.txt"
@@ -20,6 +22,13 @@ HELP_TEXT = """
 
     the 1st int number is Module, the 2nd is public or private exponent
 """
+
+
+
+def save_keys_to_file(filename, k1, k2):
+     with open(filename, 'w') as f:
+        f.write(f'{str(k1)}\n')
+        f.write(f'{str(k2)}\n')
 
 def save_chars_to_file(filename, chars_list, separator=None):
     with open(filename, "w") as f:
@@ -56,31 +65,33 @@ def extended_euclidean_greatest_common_divisor(a, b):
 
 def modular_exponentation(base, power, m):
     result = 1
-    for i in range(power):
+    for _ in range(power):
         result = (result * base) % m
     return result
 
 
-def chooseE_public_exponent(totient):
+def choose_public_exponent(totient):
     while (True):
         e = random.randrange(2, totient)
         if (euclidean_greatest_common_divisor(e, totient) == 1):
             return e
 
 def chooseKeys():
-    rand1 = random.randint(50, 300)
-    rand2 = random.randint(100, 300)
+    rand1 = random.randint(R_LO, R_UP)
+    rand2 = random.randint(R_LO, R_UP)
+    while rand1 == rand2:
+        rand2 = random.randint(R_LO, R_UP)
 
     lines = []
     with open(RANDOM_NUMBERS_FILE, 'r') as f:
-        lines = f.read_lines() 
+        lines = f.readlines() 
 
     prime1 = int(lines[rand1])
     prime2 = int(lines[rand2])
 
     n = prime1 * prime2
     totient = (prime1 - 1) * (prime2 - 1) 
-    e = chooseE_public_exponent(totient)
+    e = choose_public_exponent(totient)
 
     gcd, x, y = extended_euclidean_greatest_common_divisor(e, totient)
 
@@ -88,15 +99,6 @@ def chooseKeys():
         d = x + totient
     else:
         d = x
-
-    with open(PUBLIC_KEYS_FILE, 'w') as f:
-        f.write(f'{str(n)}\n')
-        f.write(f'{str(e)}\n')
-    
-
-    with open(PRIVATE_KEYS_FILE, 'w') as f:
-        f.write(f'{str(n)}\n')
-        f.write(f'{str(d)}\n')
     
     return n, e, d
 
@@ -106,41 +108,33 @@ def encrypt_char(char, n_key, e_key):
 def decrypt_char(char_code, n_key, d_key):
     return chr(modular_exponentation(char_code, d_key, n_key))
 
-def encrypt(message, n_key, e_key):
-    encrypted_blocks = []
 
-    for char in message:
-        char_code = ord(char)
+def demo():
+    n_key, e_key, d_key = chooseKeys()
+    message = input('Input some text: ')
     
-        encrypted_blocks.append(str(modular_exponentation(char_code, e_key, n_key)))
+    encrypted_message = []
+    
+    for char in message:
+        encrypted_message.append(encrypt_char(char, n_key, e_key))
 
-    encrypted_message = " ".join(encrypted_blocks)
+    print('Encrypted:', encrypted_message)
 
-    return encrypted_message
-
-def decrypt(blocks, n_key, d_key):
-    list_blocks = blocks.split(' ')
-    int_blocks = []
-
-    for s in list_blocks:
-        int_blocks.append(int(s))
-
-    message = []
-
-    for i in range(len(int_blocks)):
-        int_blocks[i] = modular_exponentation(int_blocks[i], d_key, n_key) #(int_blocks[i]**d) % n
-        
-    for char_code in int_blocks:
-        message.append(chr(char_code))
-
-    return "".join(message)
+    decypted_message = []
+    for char_code in encrypted_message:
+        decypted_message.append(decrypt_char(char_code, n_key, d_key))
+    print('Decrypted:',''.join(decypted_message))
 
 
 def main():
-    if len(sys.argv) < 3:
+    if len(sys.argv) <= 2 and sys.argv[1] != 'demo':
         print(HELP_TEXT)
         exit(0)
-
+    
+    if sys.argv[1] == 'demo':
+        demo()
+        exit(0)
+        
     encrypt_decrypt_command = sys.argv[1]
     file_to_read = sys.argv[2]
 
@@ -185,5 +179,6 @@ def main():
     
     save_chars_to_file('decrypted.txt', decypted_message)
 
+
 if __name__ == "__main__":
-    main()
+    demo()
