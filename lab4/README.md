@@ -29,7 +29,7 @@ keys file format is (two ints separated with linebreak):
 ## Prime numbers note
 - `primes.txt` file is required to be in the same directory with `el_gamal.py` file.
 - prime numbers are taken from `primes.txt` file using python default random module
-- Lower bound and upper bound for choosing a prime number are defined in `rsa.py` as R_LO & R_HI constants. Their values are _INDEXES_ of prime numbers from the file, not the real number bounds
+- Lower bound and upper bound for choosing a prime number are defined in `el_gamal.py` as R_LO & R_HI constants. Their values are _INDEXES_ of prime numbers from the file, not the real number bounds
 - the bigger are primes the slower script works :)
 
     
