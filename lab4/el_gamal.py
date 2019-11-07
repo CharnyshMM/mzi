@@ -51,7 +51,8 @@ def get_prime_factors(num):
         prime_factors.append(2)
         num /= 2
 
-    for i in range(3, int(math.sqrt(num)) + 1, 2):
+    end = int(math.sqrt(num)) + 1
+    for i in range(3, end, 2):
         while not num % i:
             prime_factors.append(i)
             num /= i
@@ -61,7 +62,7 @@ def get_prime_factors(num):
 def get_primitive_root_modulo(p, prime_factors):
     g = random.randint(2, p - 1)
     for i in range(len(prime_factors)):
-        if modular_exponentation(g, (p - 1) / prime_factors[i], p) == 1:
+        if modular_exponentation(g, int((p - 1) / prime_factors[i]), p) == 1:
             return get_primitive_root_modulo(p, prime_factors)
     return g
 
@@ -83,7 +84,7 @@ def get_k(p):
 def generate_keys():
     p = get_prime_number_p()
 
-    g = get_primitive_root_modulo(p, get_prime_factors(p))
+    g = get_primitive_root_modulo(p, get_prime_factors(p-1))
 
     x = random.randint(2, p - 1)
     y = modular_exponentation(g, x, p)
@@ -168,7 +169,7 @@ def main():
     encrypt_decrypt_command = sys.argv[1]
     file_to_read = sys.argv[2]
         
-    p, g, y = None
+    p, g, y = None, None, None
 
     if encrypt_decrypt_command == 'enc':
         encrypted_message = []
