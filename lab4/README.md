@@ -1,4 +1,4 @@
-# RSA lab
+# EL-GAMAL scheme lab 
 
 ## USAGE: 
   * **demo run** `python el_gamal.py demo`
