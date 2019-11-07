@@ -1,6 +1,6 @@
 # EL-GAMAL scheme lab 
 
-## USAGE: (Python >=3.5)
+## USAGE: (Python >=3.6)
   * **demo run** `python el_gamal.py demo`
   * **encryption:** `python el_gamal.py enc filename_to_read [filename_to_take_keys_from]`
   * **decryption:** `python el_gamal.py dec filename_to_read filename_to_take_keys_from`
