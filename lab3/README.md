@@ -1,6 +1,6 @@
 # RSA lab
 
-## USAGE (Python >3.5): 
+## USAGE (Python >3.6): 
   * **demo run** `python rsa.py demo`
   * **encryption:** `python rsa.py enc filename_to_read [filename_to_take_keys_from]`
   * **decryption:** `python rsa.py dec filename_to_read filename_to_take_keys_from`
