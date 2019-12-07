@@ -14,19 +14,6 @@ HELP = """
     $ python keygen.py 
 """
 
-K = 123 # secret key
-
- # ipad = [ '\x36' * block_size ]
-    # // оператор "*" указывает количество повторений последовательности байт,
-    # // а block_size - размер блока хеш-функции, 
-    # opad = [ '\x5c' * block_size ]
-    
-    # ikeypad = ipad ⊕ key
-    # // оператор "⊕" выполняет побитовое исключающее ИЛИ (xor)
-    # okeypad = opad ⊕ key
-    
-    # RETURN hash( okeypad ∥ hash( ikeypad ∥ msg ) )
-    # // Оператор "∥" выполняет склейку строк
 
 def hmac(key, msg):
     # key & message are expected to be bytearrays
@@ -50,16 +37,6 @@ def hmac(key, msg):
     h2.update(bytearray(okeypad) + h2.digest())
     return h2.digest()
 
-# def run(generate_key):
-#     message = "1234567812345678901234567890"
-#     message_b = bytearray(message, "utf-8")
-#     # just a test of coverting to & from bytes :)
-    
-#     key = bytearray(int.to_bytes(int_key, byteorder='big', signed=False, length=64))
-    
-#     h1 = hmac(message_b, key)
-#     print(len(h1))
-#     print(int.from_bytes(h1, byteorder='big', signed=False))
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
