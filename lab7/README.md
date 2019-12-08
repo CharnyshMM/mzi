@@ -13,6 +13,6 @@
    
 4. Run
 
-        $ python common_params.txt private_key.txt other_user_public_key.txt
+        $ python run.py common_params.txt private_key.txt other_user_public_key.txt
 
     This will generate a `symmetric_key.txt` file, that contains a key you can use for some symmetric cryptography protocol 
