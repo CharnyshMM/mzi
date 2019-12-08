@@ -6,7 +6,7 @@ from curve import EllipticCurve
 SIZE = 64
 
 HELP = """
-  Diffy-Hellman protocol utility. Keys generator
+  Diffie–Hellman protocol utility. Keys generator
   USAGE:
   python generate.py common_params.txt
   
@@ -18,6 +18,7 @@ HELP = """
 """
 if len(sys.argv) < 2:
   print(HELP)
+  exit(1)
 
 keys = read_keys_from_file(sys.argv[1])
 
