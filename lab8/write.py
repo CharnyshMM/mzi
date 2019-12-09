@@ -9,7 +9,7 @@ import sys
 HELP = """
   Zhao-Koch's steganography algorithm realization. Message writer
   USAGE: 
-  $ python write.py img_with_embedded_text.jpeg color_id [message_length]
+  $ python write.py img_template.jpeg color_id
 
   * image_template.jpeg - jpeg file to generate image with embedded text
   * color_id - digit representing the color of RGB. Message text is mixed into the colors channel
@@ -47,7 +47,7 @@ if __name__ == "__main__":
       print("help")
       exit(0)
 
-    message = to_bits('my message')
+    message = to_bits(input('Your message, please: '))
     
     color = 0
     if len(sys.argv) == 3:
