@@ -31,6 +31,8 @@ def embed_message(orig, msg, color):
     changed = orig.copy()
     print(color)
     color_chanel = changed[:, :, color]
+    if len(msg) > len(color_chanel):
+      raise ValueError('too long message for the picture')
     blocks = view_as_blocks(color_chanel, block_shape=(N, N))
     h = blocks.shape[1]
     for index, bit in enumerate(msg):
