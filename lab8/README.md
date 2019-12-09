@@ -3,6 +3,13 @@
 # Zhao-Koch's steganography algorithm realization
 
  - utility to write and read steganography from jpeg images
+ 
+## Additional package required:
+
+- [https://scikit-image.org/]() is used for reading, writing & modifying images
+- you may either install the package manually or run
+    
+        $ pip install -r requirements.txt
 
 ## Usage:
 
